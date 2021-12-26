@@ -1,6 +1,9 @@
 package pointerserrors
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Stringer interface {
 	String() string
@@ -11,6 +14,8 @@ type Bitcoin int
 type Wallet struct {
 	balance Bitcoin
 }
+
+var ErrInsuficientFunds = errors.New("cannot withdraw, insufficient funds")
 
 func (w *Wallet) Deposit(amount Bitcoin) {
 	w.balance += amount
@@ -24,6 +29,10 @@ func (b Bitcoin) String() string {
 	return fmt.Sprintf("%d BTC", b)
 }
 
-func (w *Wallet) Withdraw(amount Bitcoin) {
+func (w *Wallet) Withdraw(amount Bitcoin) error {
+	if amount > w.balance {
+		return ErrInsuficientFunds
+	}
 	w.balance -= amount
+	return nil
 }
