@@ -28,11 +28,25 @@ func TestSumAll(t *testing.T) {
 	}
 }
 
-func TsetSumTrail(t *testing.T) {
-	got := SumAllTrails([]int{1, 3}, []int{0, 9})
-	want := []int{3, 9}
+func TestSumTrail(t *testing.T) {
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got: %v, want %v", got, want)
+	checkSums := func(t testing.TB, got, want []int) {
+		t.Helper()
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got: %v, want %v", got, want)
+		}
 	}
+
+	t.Run("get sum of some slices", func(t *testing.T) {
+		got := SumAllTrails([]int{1, 3}, []int{0, 9})
+		want := []int{3, 9}
+		checkSums(t, got, want)
+	})
+
+	t.Run("get sum of empty slice", func(t *testing.T) {
+		got := SumAllTrails([]int{}, []int{2, 3, 4})
+		want := []int{0, 7}
+		checkSums(t, got, want)
+	})
+
 }

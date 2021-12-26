@@ -20,8 +20,13 @@ func SumAll(numbersToSum ...[]int) []int {
 func SumAllTrails(numbersToTrail ...[]int) []int {
 	var trails []int
 	for _, numbers := range numbersToTrail {
-		tail := numbers[1:]
-		trails = append(trails, Sum(tail))
+		if len(numbers) == 0 {
+			trails = append(trails, 0)
+		} else {
+
+			tail := numbers[1:]
+			trails = append(trails, Sum(tail))
+		}
 	}
 	return trails
 }
